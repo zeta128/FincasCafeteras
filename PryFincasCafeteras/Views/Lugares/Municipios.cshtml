@@ -1,0 +1,8 @@
+﻿@model IEnumerable<PryFincasCafeteras.Models.Municipio>
+
+<select class="form-control" id="IdMunicipio" name="IdMunicipio">
+    @foreach (var item in Model)
+    {
+        <option value="@item.Codigo"> @item.Nombre</option>
+    }
+</select>

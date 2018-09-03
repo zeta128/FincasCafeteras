@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FincasCafeterasDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Asociado">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Parentesco" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Apellidos" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Id_pariente" Type="int" />
+  </EntityType>
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Finca">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="IdVereda" Type="int" />
+  </EntityType>
+  <EntityType Name="FincaAsociado">
+    <Key>
+      <PropertyRef Name="IdFinca" />
+      <PropertyRef Name="IdAsociado" />
+    </Key>
+    <Property Name="IdFinca" Type="int" Nullable="false" />
+    <Property Name="IdAsociado" Type="int" Nullable="false" />
+    <Property Name="rol" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Municipio">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="IdDepartamento" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Trabajador">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Apellidos" Type="nchar" MaxLength="30" Nullable="false" />
+    <Property Name="PeriodoContrato" Type="varchar" MaxLength="30" />
+    <Property Name="IdFinca" Type="int" />
+  </EntityType>
+  <EntityType Name="TrabajadorFinca">
+    <Key>
+      <PropertyRef Name="IdFinca" />
+      <PropertyRef Name="IdTrabajador" />
+    </Key>
+    <Property Name="IdFinca" Type="int" Nullable="false" />
+    <Property Name="IdTrabajador" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vereda">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="IdMunicipio" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Finca_Vereda">
+    <End Role="Vereda" Type="Self.Vereda" Multiplicity="0..1" />
+    <End Role="Finca" Type="Self.Finca" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vereda">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Finca">
+        <PropertyRef Name="IdVereda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FincaAsociado_Asociado">
+    <End Role="Asociado" Type="Self.Asociado" Multiplicity="1" />
+    <End Role="FincaAsociado" Type="Self.FincaAsociado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Asociado">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FincaAsociado">
+        <PropertyRef Name="IdAsociado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FincaAsociado_Finca1">
+    <End Role="Finca" Type="Self.Finca" Multiplicity="1" />
+    <End Role="FincaAsociado" Type="Self.FincaAsociado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Finca">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="FincaAsociado">
+        <PropertyRef Name="IdFinca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Municipio_Departamento1">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="Municipio" Type="Self.Municipio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Municipio">
+        <PropertyRef Name="IdDepartamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrabajadorFinca_Finca">
+    <End Role="Finca" Type="Self.Finca" Multiplicity="1" />
+    <End Role="TrabajadorFinca" Type="Self.TrabajadorFinca" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Finca">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="TrabajadorFinca">
+        <PropertyRef Name="IdFinca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrabajadorFinca_Trabajador">
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="1" />
+    <End Role="TrabajadorFinca" Type="Self.TrabajadorFinca" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trabajador">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TrabajadorFinca">
+        <PropertyRef Name="IdTrabajador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vereda_Municipio1">
+    <End Role="Municipio" Type="Self.Municipio" Multiplicity="1" />
+    <End Role="Vereda" Type="Self.Vereda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Municipio">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Vereda">
+        <PropertyRef Name="IdMunicipio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FincasCafeterasDBModelStoreContainer">
+    <EntitySet Name="Asociado" EntityType="Self.Asociado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departamento" EntityType="Self.Departamento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Finca" EntityType="Self.Finca" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FincaAsociado" EntityType="Self.FincaAsociado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Municipio" EntityType="Self.Municipio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trabajador" EntityType="Self.Trabajador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrabajadorFinca" EntityType="Self.TrabajadorFinca" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Vereda" EntityType="Self.Vereda" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Finca_Vereda" Association="Self.FK_Finca_Vereda">
+      <End Role="Vereda" EntitySet="Vereda" />
+      <End Role="Finca" EntitySet="Finca" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FincaAsociado_Asociado" Association="Self.FK_FincaAsociado_Asociado">
+      <End Role="Asociado" EntitySet="Asociado" />
+      <End Role="FincaAsociado" EntitySet="FincaAsociado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FincaAsociado_Finca1" Association="Self.FK_FincaAsociado_Finca1">
+      <End Role="Finca" EntitySet="Finca" />
+      <End Role="FincaAsociado" EntitySet="FincaAsociado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Municipio_Departamento1" Association="Self.FK_Municipio_Departamento1">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Municipio" EntitySet="Municipio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrabajadorFinca_Finca" Association="Self.FK_TrabajadorFinca_Finca">
+      <End Role="Finca" EntitySet="Finca" />
+      <End Role="TrabajadorFinca" EntitySet="TrabajadorFinca" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrabajadorFinca_Trabajador" Association="Self.FK_TrabajadorFinca_Trabajador">
+      <End Role="Trabajador" EntitySet="Trabajador" />
+      <End Role="TrabajadorFinca" EntitySet="TrabajadorFinca" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vereda_Municipio1" Association="Self.FK_Vereda_Municipio1">
+      <End Role="Municipio" EntitySet="Municipio" />
+      <End Role="Vereda" EntitySet="Vereda" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

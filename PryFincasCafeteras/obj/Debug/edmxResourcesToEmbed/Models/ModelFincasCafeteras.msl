@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FincasCafeterasDBModelStoreContainer" CdmEntityContainer="FincasCafeterasCon">
+    <EntitySetMapping Name="Asociado">
+      <EntityTypeMapping TypeName="FincasCafeterasDBModel.Asociado">
+        <MappingFragment StoreEntitySet="Asociado">
+          <ScalarProperty Name="Id_pariente" ColumnName="Id_pariente" />
+          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Parentesco" ColumnName="Parentesco" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departamento">
+      <EntityTypeMapping TypeName="FincasCafeterasDBModel.Departamento">
+        <MappingFragment StoreEntitySet="Departamento">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Finca">
+      <EntityTypeMapping TypeName="FincasCafeterasDBModel.Finca">
+        <MappingFragment StoreEntitySet="Finca">
+          <ScalarProperty Name="IdVereda" ColumnName="IdVereda" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FincaAsociado">
+      <EntityTypeMapping TypeName="FincasCafeterasDBModel.FincaAsociado">
+        <MappingFragment StoreEntitySet="FincaAsociado">
+          <ScalarProperty Name="rol" ColumnName="rol" />
+          <ScalarProperty Name="IdAsociado" ColumnName="IdAsociado" />
+          <ScalarProperty Name="IdFinca" ColumnName="IdFinca" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Municipio">
+      <EntityTypeMapping TypeName="FincasCafeterasDBModel.Municipio">
+        <MappingFragment StoreEntitySet="Municipio">
+          <ScalarProperty Name="IdDepartamento" ColumnName="IdDepartamento" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trabajador">
+      <EntityTypeMapping TypeName="FincasCafeterasDBModel.Trabajador">
+        <MappingFragment StoreEntitySet="Trabajador">
+          <ScalarProperty Name="IdFinca" ColumnName="IdFinca" />
+          <ScalarProperty Name="PeriodoContrato" ColumnName="PeriodoContrato" />
+          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vereda">
+      <EntityTypeMapping TypeName="FincasCafeterasDBModel.Vereda">
+        <MappingFragment StoreEntitySet="Vereda">
+          <ScalarProperty Name="IdMunicipio" ColumnName="IdMunicipio" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TrabajadorFinca" TypeName="FincasCafeterasDBModel.TrabajadorFinca" StoreEntitySet="TrabajadorFinca">
+      <EndProperty Name="Trabajador">
+        <ScalarProperty Name="Id" ColumnName="IdTrabajador" />
+      </EndProperty>
+      <EndProperty Name="Finca">
+        <ScalarProperty Name="Codigo" ColumnName="IdFinca" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

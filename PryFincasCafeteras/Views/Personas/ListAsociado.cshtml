@@ -1,0 +1,10 @@
+﻿
+@model IEnumerable<PryFincasCafeteras.Models.Asociado>
+
+<select class="form-control" id="Id_pariente" name="Id_pariente">
+    <option value=9> Yo</option>
+    @foreach (var item in Model)
+    {
+        <option value="@item.Id"> @item.Nombres</option>
+    }
+</select>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<PryFincasCafeteras.Models.Vereda>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Veredas</h2>
+
+<p>
+    @Html.ActionLink("Agregar vereda", "AgregarVereda") &nbsp;&nbsp;&nbsp;
+    @Html.ActionLink("Agregar municipio", "AgregarMunicipio")&nbsp;&nbsp;&nbsp;
+    @Html.ActionLink("Agregar departamento", "AgregarDepto")&nbsp;&nbsp;&nbsp;
+    <br />
+    <br />
+    @Html.ActionLink("Ver municipios", "ListMunicipios")&nbsp;&nbsp;&nbsp;
+    @Html.ActionLink("Ver departamentos", "ListDepartamentos")&nbsp;&nbsp;&nbsp;
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+           Municipio
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @PryFincasCafeteras.Controllers.LugaresController.NombreMunicipio(item.IdMunicipio)
+        
+        
+        </td>
+        <td>
+           
+            @Html.ActionLink("Eliminar", "EliminarVereda", new {  id=item.Codigo  })
+        </td>
+    </tr>
+}
+
+</table>

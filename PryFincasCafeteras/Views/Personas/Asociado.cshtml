@@ -1,0 +1,67 @@
+﻿@model IEnumerable<PryFincasCafeteras.Models.Asociado_>
+
+@{
+    ViewBag.Title = "Asociado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Asociados</h2>
+
+<p>
+    @Html.ActionLink("Registrar asociado", "AgregarAsociado")
+</p>
+<br />
+<p>
+    @Html.ActionLink("Registrar trabajador", "AgregarTrabajador")
+</p>
+<br /><br />
+<p>
+    @Html.ActionLink("Ver trabajadores", "Empleado")
+</p>
+
+<table class="table">
+    <tr>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </th>
+        <th>
+            Finca
+        </th>
+        <th>
+            Rol
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellidos)
+        </td>
+        <td>
+            @PryFincasCafeteras.Controllers.FincasController.NombreFinca(item.IdFinca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rol)
+        </td>
+
+
+        <td>
+            @Html.ActionLink("Editar", "EditarAsociado", new { id = item.Id }) |
+            @Html.ActionLink("Eliminar", "EliminarAsociado", new { id = item.Id })
+        </td>
+    </tr>
+    }
+
+</table>

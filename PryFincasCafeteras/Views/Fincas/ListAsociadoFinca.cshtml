@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PryFincasCafeteras.Models.Asociado_>
+
+@{
+    ViewBag.Title = "ListAsociadoFinca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Habitantes de la finca </h2>
+
+<p>
+    @Html.ActionLink("Agregar asociado", "AgregarAsociado","Personas")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Finca
+        </th>
+        <th>
+            Nombre 
+        </th>
+        
+       
+        <th>
+            @Html.DisplayNameFor(model => model.rol)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @PryFincasCafeteras.Controllers.FincasController.NombreFinca(item.IdFinca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombres)&nbsp;@Html.DisplayFor(modelItem => item.Apellidos)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.rol)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

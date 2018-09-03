@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PryFincasCafeteras.Models.Finca>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Fincas</h2>
+
+<p>
+    @Html.ActionLink("Agregar finca", "AgregarFinca")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Codigo
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Vereda
+        </th>
+        <th>
+            Asociados
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @if (item.IdVereda != null)
+            {
+                @PryFincasCafeteras.Controllers.LugaresController.NombreVereda(item.IdVereda.Value)
+
+            }
+
+        </td>
+        <td>
+            @Html.ActionLink("Ver asociados", "ListAsociadoFinca", new { IdFinca = item.Codigo })
+
+        </td>
+        
+
+        <td>
+            @Html.ActionLink("Editar", "EditarFinca", new { id = item.Codigo }) |
+            @Html.ActionLink("Detalles", "DetallesFinca", new { id = item.Codigo }) |
+            @Html.ActionLink("Eliminar", "EliminarFinca", new { id = item.Codigo })
+        </td>
+    </tr>
+}
+
+</table>

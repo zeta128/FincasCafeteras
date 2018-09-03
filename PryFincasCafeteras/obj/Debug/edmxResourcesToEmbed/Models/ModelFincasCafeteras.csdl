@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FincasCafeterasDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="FincasCafeterasCon" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Asociado" EntityType="FincasCafeterasDBModel.Asociado" />
+    <EntitySet Name="Departamento" EntityType="FincasCafeterasDBModel.Departamento" />
+    <EntitySet Name="Finca" EntityType="FincasCafeterasDBModel.Finca" />
+    <EntitySet Name="FincaAsociado" EntityType="FincasCafeterasDBModel.FincaAsociado" />
+    <EntitySet Name="Municipio" EntityType="FincasCafeterasDBModel.Municipio" />
+    <EntitySet Name="Trabajador" EntityType="FincasCafeterasDBModel.Trabajador" />
+    <EntitySet Name="Vereda" EntityType="FincasCafeterasDBModel.Vereda" />
+    <AssociationSet Name="FK_FincaAsociado_Asociado" Association="FincasCafeterasDBModel.FK_FincaAsociado_Asociado">
+      <End Role="Asociado" EntitySet="Asociado" />
+      <End Role="FincaAsociado" EntitySet="FincaAsociado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Municipio_Departamento1" Association="FincasCafeterasDBModel.FK_Municipio_Departamento1">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Municipio" EntitySet="Municipio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Finca_Vereda" Association="FincasCafeterasDBModel.FK_Finca_Vereda">
+      <End Role="Vereda" EntitySet="Vereda" />
+      <End Role="Finca" EntitySet="Finca" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FincaAsociado_Finca1" Association="FincasCafeterasDBModel.FK_FincaAsociado_Finca1">
+      <End Role="Finca" EntitySet="Finca" />
+      <End Role="FincaAsociado" EntitySet="FincaAsociado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vereda_Municipio1" Association="FincasCafeterasDBModel.FK_Vereda_Municipio1">
+      <End Role="Municipio" EntitySet="Municipio" />
+      <End Role="Vereda" EntitySet="Vereda" />
+    </AssociationSet>
+    <AssociationSet Name="TrabajadorFinca" Association="FincasCafeterasDBModel.TrabajadorFinca">
+      <End Role="Finca" EntitySet="Finca" />
+      <End Role="Trabajador" EntitySet="Trabajador" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Asociado">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Parentesco" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Nombres" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Id_pariente" Type="Int32" />
+    <NavigationProperty Name="FincaAsociado" Relationship="FincasCafeterasDBModel.FK_FincaAsociado_Asociado" FromRole="Asociado" ToRole="FincaAsociado" />
+  </EntityType>
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Municipio" Relationship="FincasCafeterasDBModel.FK_Municipio_Departamento1" FromRole="Departamento" ToRole="Municipio" />
+  </EntityType>
+  <EntityType Name="Finca">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="IdVereda" Type="Int32" />
+    <NavigationProperty Name="Vereda" Relationship="FincasCafeterasDBModel.FK_Finca_Vereda" FromRole="Finca" ToRole="Vereda" />
+    <NavigationProperty Name="FincaAsociado" Relationship="FincasCafeterasDBModel.FK_FincaAsociado_Finca1" FromRole="Finca" ToRole="FincaAsociado" />
+    <NavigationProperty Name="Trabajador" Relationship="FincasCafeterasDBModel.TrabajadorFinca" FromRole="Finca" ToRole="Trabajador" />
+  </EntityType>
+  <EntityType Name="FincaAsociado">
+    <Key>
+      <PropertyRef Name="IdFinca" />
+      <PropertyRef Name="IdAsociado" />
+    </Key>
+    <Property Name="IdFinca" Type="Int32" Nullable="false" />
+    <Property Name="IdAsociado" Type="Int32" Nullable="false" />
+    <Property Name="rol" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Asociado" Relationship="FincasCafeterasDBModel.FK_FincaAsociado_Asociado" FromRole="FincaAsociado" ToRole="Asociado" />
+    <NavigationProperty Name="Finca" Relationship="FincasCafeterasDBModel.FK_FincaAsociado_Finca1" FromRole="FincaAsociado" ToRole="Finca" />
+  </EntityType>
+  <EntityType Name="Municipio">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="IdDepartamento" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Departamento" Relationship="FincasCafeterasDBModel.FK_Municipio_Departamento1" FromRole="Municipio" ToRole="Departamento" />
+    <NavigationProperty Name="Vereda" Relationship="FincasCafeterasDBModel.FK_Vereda_Municipio1" FromRole="Municipio" ToRole="Vereda" />
+  </EntityType>
+  <EntityType Name="Trabajador">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombres" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="PeriodoContrato" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="IdFinca" Type="Int32" />
+    <NavigationProperty Name="Finca" Relationship="FincasCafeterasDBModel.TrabajadorFinca" FromRole="Trabajador" ToRole="Finca" />
+  </EntityType>
+  <EntityType Name="Vereda">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="IdMunicipio" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Finca" Relationship="FincasCafeterasDBModel.FK_Finca_Vereda" FromRole="Vereda" ToRole="Finca" />
+    <NavigationProperty Name="Municipio" Relationship="FincasCafeterasDBModel.FK_Vereda_Municipio1" FromRole="Vereda" ToRole="Municipio" />
+  </EntityType>
+  <Association Name="FK_FincaAsociado_Asociado">
+    <End Type="FincasCafeterasDBModel.Asociado" Role="Asociado" Multiplicity="1" />
+    <End Type="FincasCafeterasDBModel.FincaAsociado" Role="FincaAsociado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Asociado">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FincaAsociado">
+        <PropertyRef Name="IdAsociado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Municipio_Departamento1">
+    <End Type="FincasCafeterasDBModel.Departamento" Role="Departamento" Multiplicity="1" />
+    <End Type="FincasCafeterasDBModel.Municipio" Role="Municipio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Municipio">
+        <PropertyRef Name="IdDepartamento" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Finca_Vereda">
+    <End Type="FincasCafeterasDBModel.Vereda" Role="Vereda" Multiplicity="0..1" />
+    <End Type="FincasCafeterasDBModel.Finca" Role="Finca" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vereda">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Finca">
+        <PropertyRef Name="IdVereda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FincaAsociado_Finca1">
+    <End Type="FincasCafeterasDBModel.Finca" Role="Finca" Multiplicity="1" />
+    <End Type="FincasCafeterasDBModel.FincaAsociado" Role="FincaAsociado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Finca">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="FincaAsociado">
+        <PropertyRef Name="IdFinca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vereda_Municipio1">
+    <End Type="FincasCafeterasDBModel.Municipio" Role="Municipio" Multiplicity="1" />
+    <End Type="FincasCafeterasDBModel.Vereda" Role="Vereda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Municipio">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Vereda">
+        <PropertyRef Name="IdMunicipio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TrabajadorFinca">
+    <End Type="FincasCafeterasDBModel.Finca" Role="Finca" Multiplicity="*" />
+    <End Type="FincasCafeterasDBModel.Trabajador" Role="Trabajador" Multiplicity="*" />
+  </Association>
+</Schema>
